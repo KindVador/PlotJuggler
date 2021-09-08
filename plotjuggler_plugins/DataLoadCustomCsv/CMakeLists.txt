@@ -7,16 +7,15 @@ add_definitions(-DQT_PLUGIN)
 QT5_WRAP_UI ( UI_SRC  ../selectlistdialog.ui  )
 
 SET( SRC
+    csv.hpp
     dataload_custom_csv.cpp
     ../selectlistdialog.h
     )
 
-add_library(DataLoadCustomCsv SHARED ${SRC} ${UI_SRC}  )
+add_library(DataLoadCustomCsv SHARED ${SRC} ${UI_SRC} )
 target_link_libraries(DataLoadCustomCsv
     ${Qt5Widgets_LIBRARIES}
     ${Qt5Xml_LIBRARIES}
     plotjuggler_plugin_base)
 
-
-install(TARGETS DataLoadCustomCsv DESTINATION ${PJ_PLUGIN_INSTALL_DIRECTORY}  )
-
+install(TARGETS DataLoadCustomCsv DESTINATION ${PJ_PLUGIN_INSTALL_DIRECTORY} )

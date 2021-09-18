@@ -7,7 +7,6 @@ add_definitions(-DQT_PLUGIN)
 QT5_WRAP_UI ( UI_SRC  ../selectlistdialog.ui  )
 
 SET( SRC
-    csv.hpp
     dataload_custom_csv.cpp
     ../selectlistdialog.h
     )

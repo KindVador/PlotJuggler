@@ -1,6 +1,5 @@
 #pragma once
 
-#include "field.hpp"
 #include <QString>
 #include <QDate>
 #include <QTime>
@@ -21,7 +20,7 @@ static QMap<QString, QRegularExpression> gmtFormats {{"%j-%H:%M:%S-%f.%f", QRegu
                                                      {"hh:mm:ss:zzz", QRegularExpression("^(?<H>[0-2][0-9]):(?<M>[0-5][0-9]):(?<S>[0-5][0-9]):(?<f>[0-9]{3})$", QRegularExpression::NoPatternOption)}};
 QString findGmtFormat(const QString &gmtFormat);
 
-class GmtField : public Field {
+class GmtField {
 
 public:
     // constructors
@@ -43,8 +42,8 @@ public:
     // methods
     [[nodiscard]] QDateTime toDateTime(const QTimeZone &tz=QTimeZone::utc()) const;
     [[nodiscard]] qint64 toTimeStamp() const;
-    [[nodiscard]] QString toString() const override;
-    [[nodiscard]] std::string toStdString() const override;
+    [[nodiscard]] QString toString() const;
+    [[nodiscard]] std::string toStdString() const;
     [[nodiscard]] QDate getDate() const;
     [[nodiscard]] QTime getTime() const;
 

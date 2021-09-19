@@ -12,7 +12,6 @@ QDateTime GmtField::toDateTime(const QTimeZone &tz) const {
 GmtField GmtField::fromString(QString &gmt, int year) {
     // check that string format is compliant with one of the supported formats
     QString gmtFormat = findGmtFormat(gmt);
-    qDebug() << "gmtFormat=" << gmtFormat;
     if (gmtFormat.isEmpty())
         throw UnsupportedFormat();
 
@@ -24,7 +23,6 @@ GmtField GmtField::fromString(QString &gmt, int year) {
     // check if format contains a nb of year's day.
     if (gmtFormat.contains("%j")) {
         int nbDays = matchResult.captured("j").toInt();
-        qDebug() << "nbDays=" << nbDays << matchResult.captured("j");
         if (nbDays < 1 || nbDays > 365)
             throw std::range_error("Out of range value for year's day, should be included in 1-365 range.");
         nbMicroSeconds += (nbDays - 1) * DAY_IN_MICRO;

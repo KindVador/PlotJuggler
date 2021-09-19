@@ -9,7 +9,6 @@ QT5_WRAP_UI ( UI_SRC  ../selectlistdialog.ui  )
 SET( SRC
     dataload_custom_csv.cpp
     unsupportedformat.hpp
-    field.hpp field.cpp
     gmtfield.hpp gmtfield.cpp
     ../selectlistdialog.h
     )

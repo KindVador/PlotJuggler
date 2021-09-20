@@ -12,8 +12,6 @@ DataLoadCustomCsv::DataLoadCustomCsv() {
     _extensions.push_back("csv");
 }
 
-const QRegExp csv_separator("(\\;)");
-
 const std::vector<const char *> &DataLoadCustomCsv::compatibleFileExtensions() const {
     return _extensions;
 }
@@ -21,7 +19,13 @@ const std::vector<const char *> &DataLoadCustomCsv::compatibleFileExtensions() c
 QSize DataLoadCustomCsv::parseHeader(QFile *file, std::vector<std::string> &ordered_names) {
     QTextStream inA(file);
     QString first_line = inA.readLine();
-    QStringList firstline_items = first_line.split(csv_separator);
+    QStringList firstline_items = first_line.split(_separator);
+    // check that separator is correctly set
+    if (firstline_items.count() <= 1) {
+        _separator = QChar(',');
+        firstline_items = first_line.split(_separator);
+    }
+
     int linecount = 0;
     const int columncount = firstline_items.count();
 
@@ -132,7 +136,6 @@ bool DataLoadCustomCsv::readDataFromFile(FileLoadInfo *info, PlotDataMapRef &plo
     bool monotonic_warning = false;
     bool to_string_parse = false;
     QString format_string = "";
-    QChar commentChar = '#';
     QSet<QString> naValues = {"#N/A", "?", "NaN"};
     int linecount = 0;
     std::map<int, QString> previousValidValues;
@@ -142,10 +145,10 @@ bool DataLoadCustomCsv::readDataFromFile(FileLoadInfo *info, PlotDataMapRef &plo
         QString line = inB.readLine();
 
         // skip commented lines
-        if (line.startsWith(commentChar))
+        if (line.startsWith(_comments))
             continue;
 
-        QStringList string_items = line.split(csv_separator);
+        QStringList string_items = line.split(_separator);
         // check that line has the expected column count
         if (string_items.size() != columncount) {
             auto err_msg = QString(

@@ -32,4 +32,6 @@ protected:
 private:
     std::vector<const char *> _extensions;
     std::string _default_time_axis;
+    QChar _separator = QChar(';');
+    QChar _comments = QChar('#');
 };
